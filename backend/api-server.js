@@ -1,14 +1,22 @@
 const express = require('express');
 const app = express();
+app.use(express.json());
+
+
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 // Define connection to database
+const { Pool } = require('pg');
 const itemsPool = new Pool({
     connectionString: process.env.DB_URL,
     ssl: {
         rejectUnauthorized: false
     }
 });
+module.exports = itemsPool;
 
 
 app.get('/bookings', async(req, res) => {
@@ -44,5 +52,5 @@ app.post('/bookings', async (req, res) => {
 
 const port = 3000;
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });
