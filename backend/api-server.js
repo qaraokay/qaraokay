@@ -31,11 +31,11 @@ app.get('/bookings', async(req, res) => {
     }
 })
 app.post('/bookings', async (req, res) => {
-    const { description } = req.body;
+    const { new_booking } = req.body;
     try {
         const newItem = await itemsPool.query(
             'INSERT INTO bookings (slot_description) VALUES ($1) RETURNING *',
-            [slot_description]
+            [new_booking]
         );
         res.json({ 
             message: "New booking added!",
