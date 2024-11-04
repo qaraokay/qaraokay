@@ -15,9 +15,9 @@ const App = () => {
                 .then((data) => {
                     console.log(data);
                     setLoading(false);
-                    //setApiData(data); // this was in original example but returns a "map is not a function" error, which can be solved with the below revised version as it makes the data an array
+                    setApiData(data); // this was in original example but returns a "map is not a function" error, which can be solved with the below revised version as it makes the data an array
                     //setApiData(data.rows);
-                    setApiData(JSON.parse(data));
+          
                 });
         };
         getAPI();
