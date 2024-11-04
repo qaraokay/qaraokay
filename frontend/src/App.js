@@ -1,12 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import './App.css';
 const App = () => {
+    
+    // useEffect starts
     useEffect(() => {
         const getAPI = () => {
-            // Change this endpoint to whatever local or online address you have
             // Should use the env variable instead of hardcoding (eg Render's internal URL for the BACKEND_URL env variable we specified in Render)
-            //const API = 'http://127.0.0.1:3000/';
-            const API = 'https://qaraokay-fullstack.onrender.com';
+            const API = 'https://qaraokay-fullstack.onrender.com/bookings';
             fetch(API)
                 .then((response) => {
                     console.log(response);
@@ -15,18 +15,29 @@ const App = () => {
                 .then((data) => {
                     console.log(data);
                     setLoading(false);
-                    setApiData(data);
+                    //setApiData(data); // this was in original example but returns a "map is not a function" error, which can be solved with the below revised version as it makes the data an array
+                    //setApiData(data.rows);
+                    setApiData(JSON.parse(data));
                 });
         };
         getAPI();
     }, []);
+    // useEffect ends
+
+
+
     const [apiData, setApiData] = useState([]);
     const [loading, setLoading] = useState(true);
+    console.log("API data: ");
+    console.log(apiData);
     return (
         <Fragment>
             <header>
                 <h1>Bookings</h1>
             </header>
+            <div>
+              API Data = {console.log(apiData)}
+            </div>
             <div className="form-container">
                 <h2>Add Booking</h2>
                 <form method="POST" action="https://qaraokay-fullstack.onrender.com/bookings">
@@ -47,7 +58,7 @@ const App = () => {
                     </div>
                 ) : (
                     <section>
-                        {apiData.map((booking) => {
+                        {apiData?.map((booking) => {
                             
                             return (
                                 <div className="movie-container" key={String(booking.id)}>

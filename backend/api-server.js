@@ -32,7 +32,7 @@ app.get('/bookings', async(req, res) => {
         const allItems = await itemsPool.query(
             'SELECT * FROM bookings'
         );
-        res.json({ allItems });
+        res.json({ allItems.rows });
     } catch (error) {
         console.log(error);
         res.status(500).send(error.message)
