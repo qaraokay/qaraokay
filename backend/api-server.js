@@ -26,7 +26,8 @@ const itemsPool = new Pool({
 });
 module.exports = itemsPool;
 
-
+// ------
+// Fetch existing bookings (without any filtering)
 app.get('/bookings', async(req, res) => {
     try {
         const allItems = await itemsPool.query(
@@ -38,17 +39,18 @@ app.get('/bookings', async(req, res) => {
         res.status(500).send(error.message)
     }
 })
+
+// ------
+// Create a completely new booking 
 app.post('/bookings', async (req, res) => {
-    
-    //const { new_booking } = req.body;
-    //.const new_booking = req.body;
-    const new_booking = req.body.slot_description;
+
+    const slotDescription = req.body.slot_description;
     const sku = req.body.sku;
     //const new_booking = 'Mon 4 Nov 16:30';
     try {
         const newItem = await itemsPool.query(
             'INSERT INTO bookings (slot_description, sku) VALUES ($1, $2) RETURNING *',
-            [new_booking, sku]
+            [slotDescription, sku]
         );
         res.json({ 
             message: "New booking added!",
@@ -60,7 +62,27 @@ app.post('/bookings', async (req, res) => {
     }
 })
 
-
+// ------
+// Update an existing booking with new information
+app.put('/bookings', async (req, res) => {
+    
+    const slotDescription = 'REPLACE WITH DYNAMIC VALUE'
+    const bookingId = req.body.booking_id;
+    const sku = req.body.sku;
+    try {
+        const newItem = await itemsPool.query(
+            'UPDATE bookings SET (slot_description, sku) VALUES ($1, $2) WHERE booking_id = $3',
+            [slotDescription, sku, bookingId]
+        );
+        res.json({ 
+            message: "Booking updated!",
+            item: newItem.rows
+         });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message)
+    }
+})
 
 
 const port = 3000;
