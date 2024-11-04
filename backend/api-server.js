@@ -50,7 +50,7 @@ app.post('/bookings', async (req, res) => {
             [new_booking]
         );
         res.json({ 
-            message: "New booking added! $new_booking",
+            message: "New booking added!",
             item: newItem.rows
          });
     } catch (error) {

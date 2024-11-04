@@ -32,7 +32,7 @@ const App = () => {
                 <form method="POST" action="https://qaraokay-fullstack.onrender.com/bookings">
                     <div>
                         <label>Slot Description</label>
-                        <input type="text" name="movieName" required />
+                        <input type="text" name="slot_description" required />
                     </div>
                     
                     <div>
