@@ -66,13 +66,12 @@ app.post('/bookings', async (req, res) => {
 // Update an existing booking with new information
 app.put('/bookings', async (req, res) => {
     
-    const slotDescription = 'REPLACE WITH DYNAMIC VALUE'
     const bookingId = req.body.booking_id;
     const sku = req.body.sku;
     try {
         const newItem = await itemsPool.query(
-            'UPDATE bookings SET (slot_description, sku) VALUES ($1, $2) WHERE booking_id = $3',
-            [slotDescription, sku, bookingId]
+            'UPDATE bookings SET sku = $1 WHERE booking_id = $2',
+            [sku, bookingId]
         );
         res.json({ 
             message: "Booking updated!",
