@@ -15,9 +15,7 @@ const App = () => {
                 .then((data) => {
                     console.log(data);
                     setLoading(false);
-                    setApiData(data); // this was in original example but returns a "map is not a function" error, which can be solved with the below revised version as it makes the data an array
-                    //setApiData(data.rows);
-          
+                    setApiData(data);
                 });
         };
         getAPI();
@@ -35,9 +33,7 @@ const App = () => {
             <header>
                 <h1>Bookings</h1>
             </header>
-            <div>
-              API Data = {console.log(apiData)}
-            </div>
+
             <div className="form-container">
                 <h2>Add Booking</h2>
                 <form method="POST" action="https://qaraokay-fullstack.onrender.com/bookings">
@@ -51,6 +47,44 @@ const App = () => {
                     </div>
                 </form>
             </div>
+
+            <section>
+            <header>
+                <h1>Update Booking</h1>
+            </header>
+
+                        {apiData.map((booking) => {
+                            
+                            return (
+                                <div className="booking-container" key={String(booking.id)}>
+                                    <h1>{booking.slot_description}</h1>
+                                    <p>
+                                        <strong>Id:</strong> {booking.id}
+                                    </p>
+
+                                    <p>
+                                        <form method="POST" action="https://qaraokay-fullstack.onrender.com/bookings">
+                                          <input type="text" name="id" value={booking.id}></input>
+                                          <input type="radio" id="1-songs" name="sku" value="1_mon-wed_online"></input> <label for="1-songs">1 Song Mon-Wed €6 (€9 in-store)</label>
+                                          <input type="radio" id="3-songs" name="sku" value="3_mon-wed_online"></input> <label for="3-songs">3 Songs Mon-Wed €12 (€18 in-store)</label>
+                                          <input type="radio" id="5-songs" name="sku" value="5_mon-wed_online"></input> <label for="5-songs">5 Songs Mon-Wed €15 (€21 in-store)</label>
+                                          <button type="submit">Book</button>
+                                        </form>
+                                    </p>
+                              
+
+
+
+                              
+                                </div>
+                            );
+                        })}
+
+
+                        
+                    </section>
+
+
             <main>
                 {loading === true ? (
                     <div>
@@ -58,7 +92,7 @@ const App = () => {
                     </div>
                 ) : (
                     <section>
-                        {apiData?.map((booking) => {
+                        {apiData.map((booking) => {
                             
                             return (
                                 <div className="movie-container" key={String(booking.id)}>
@@ -66,10 +100,21 @@ const App = () => {
                                     <p>
                                         <strong>Id:</strong> {booking.id}
                                     </p>
+
+                                    <p>
+                                        FORM HERE
+                                    </p>
+                              
+
+
+
                               
                                 </div>
                             );
                         })}
+
+
+
                     </section>
                 )}
             </main>

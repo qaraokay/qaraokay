@@ -64,12 +64,13 @@ form div {
     flex-flow: column;
     margin-bottom: 1.3rem;
 }
-.movie-container {
+.booking-container {
     background: #fcee0b;
     padding: 4rem;
     margin-top: 2rem;
     border-radius: 2rem 7rem;
-    width: 50rem;
+    //width: 50rem;
+    width: 100%;
     max-width: 100%;
 }
 .movie-container h1 {
