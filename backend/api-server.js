@@ -1,12 +1,12 @@
 const express = require('express');
 
 const app = express();
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
+// CORS implemented so that we don't get errors when trying to access the server from a different server location
 const cors = require('cors');
 app.use(cors());
-
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -39,14 +39,18 @@ app.get('/bookings', async(req, res) => {
     }
 })
 app.post('/bookings', async (req, res) => {
-    const { new_booking } = req.body;
+    
+    //const { new_booking } = req.body;
+    //.const new_booking = req.body;
+    const new_booking = req.body.slot_description;
+    //const new_booking = 'Mon 4 Nov 16:30';
     try {
         const newItem = await itemsPool.query(
             'INSERT INTO bookings (slot_description) VALUES ($1) RETURNING *',
             [new_booking]
         );
         res.json({ 
-            message: "New booking added!",
+            message: "New booking added! $new_booking",
             item: newItem.rows
          });
     } catch (error) {
