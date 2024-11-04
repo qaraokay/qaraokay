@@ -1,5 +1,24 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
+
 import './App.css';
+
+
+
+import Navbar from "./components/Navbar.js";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+} from "react-router-dom";
+//import Home from "./pages";
+import Slots from "./pages/slots.js";
+import Payment from "./pages/payment.js";
+import Artis from "./pages/artist.js";
+
+
+
+
 const App = () => {
     
     // useEffect starts
@@ -30,6 +49,7 @@ const App = () => {
     console.log(apiData);
     return (
         <Fragment>
+            <Navbar />
             <header>
                 <h1>Bookings</h1>
             </header>
