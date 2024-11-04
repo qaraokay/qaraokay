@@ -84,7 +84,7 @@ const App = () => {
 
                                     <p>
                                         <form method="PUT" action="https://qaraokay-fullstack.onrender.com/bookings">
-                                          <input type="text" name="id" value={booking.booking_id}></input>
+                                          <input type="text" name="booking_id" value={booking.booking_id}></input>
                                           <input type="radio" id="1-songs" name="sku" value="1_mon-wed_online"></input> <label for="1-songs">1 Song Mon-Wed €6 (€9 in-store)</label>
                                           <input type="radio" id="3-songs" name="sku" value="3_mon-wed_online"></input> <label for="3-songs">3 Songs Mon-Wed €12 (€18 in-store)</label>
                                           <input type="radio" id="5-songs" name="sku" value="5_mon-wed_online"></input> <label for="5-songs">5 Songs Mon-Wed €15 (€21 in-store)</label>
