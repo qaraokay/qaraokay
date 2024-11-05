@@ -36,7 +36,7 @@ const App = () => {
     // We make the method=POST but then we create a hidden field with value=PUT and add JavaScript to catch that and post it as
     return (
         <Fragment>
-                <script src="formInterceptScript.js"></script>
+               
 
             <header>
                 <h1>Bookings</h1>
@@ -60,10 +60,13 @@ const App = () => {
             <header>
                 <h1>Update Booking</h1>
             </header>
-
+            <script src="formInterceptScript.js"></script>
+            <script src="./formInterceptScript.js"></script>
+            
                         {apiData.map((booking) => {
                             
                             return (
+                              
                                 <div className="booking-container" key={String(booking.booking_id)}>
                                     <h1>{booking.slot_description}</h1>
                                     <p>
@@ -71,7 +74,8 @@ const App = () => {
                                     </p>
 
                                     <p>
-                                        <form onsubmit="return false" name="updateForm" method="POST" action="https://qaraokay-fullstack.onrender.com/bookings">
+                                        <form onsubmit="return submitForm()">
+
                                         <fieldset>
                                           <input type="hidden" name="_method" value="PUT"></input>
                                           <input type="text" name="booking_id" value={booking.booking_id}></input>
