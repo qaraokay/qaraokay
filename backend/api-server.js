@@ -12,9 +12,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-//const fetch = require('node-fetch');
-
-
 
 // Define connection to database
 const { Pool } = require('pg');
@@ -95,13 +92,42 @@ app.post('/bookings', async (req, res) => {
 // PUT
 app.put('/bookings', async (req, res) => {
     
+    // booking_id we cannot let be empty/null/undefined
     const bookingId = req.body.booking_id;
-    const sku = req.body.sku;
-    const price_currency = req.body.price_currency;
-    const price_amount = req.body.price_amount;
-    const progress_state = req.body.progress_state;
-    const artist_instagram = req.body.artist_instagram;
-    const artist_mobile = req.body.artist_mobile;
+    
+    // For the others, we initially set these variables to NULL, so that Postgres doesn't overwrite existing values with blank/empty/null values
+    let sku = null;
+    if (req.body.sku != '') {
+        sku = req.body.sku;
+    }
+
+    let price_currency = null;
+    if (req.body.price_currency != '') {
+        price_currency = req.body.price_currency;
+    }
+    
+    let price_amount = null;
+    if (req.body.price_amount != '') {
+        price_amount = req.body.price_amount;
+    }
+
+    let progress_state = null;
+    if (req.body.progress_state != '') {
+        progress_state = req.body.progress_state;
+    }
+
+    let artist_instagram = null;
+    if (req.body.artist_instagram != '') {
+        artist_instagram = req.body.artist_instagram;
+    }
+
+    let artist_mobile = null;
+    if (req.body.artist_mobile != '') {
+        artist_mobile = req.body.artist_mobile;
+    }
+    
+    
+    // Make the database request
     try {
         const newItem = await itemsPool.query(
             'UPDATE bookings SET sku = COALESCE($1, sku), price_currency = COALESCE($2, price_currency), price_amount = COALESCE($3, price_amount), progress_state = COALESCE($4, progress_state), artist_instagram = COALESCE($5, artist_instagram), artist_mobile = COALESCE($6, artist_mobile) WHERE booking_id = $7',
