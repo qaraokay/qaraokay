@@ -13,7 +13,7 @@ const App = () => {
     console.log(booking_id);
 
 
-    // Fetch the price for the booked "product" (SKU)
+    // Fetch the price etc information for this booking
     
     // useEffect starts
     useEffect(() => {
@@ -27,15 +27,39 @@ const App = () => {
                 })
                 .then((data) => {
                     console.log(data);
-                    //setLoading(false);
-                    //setApiData(data);
+                    setLoading(false);
+                    setApiData(data);
                 });
         };
         getAPI();
     }, []);
     // useEffect ends
 
+    const [apiData, setApiData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    console.log("API data: ");
+    console.log(apiData);
 
+    //const sku = apiData[0].sku;
+    /*
+    {apiData[0].price_amount} {apiData[0].price_currency} 
+    {apiData[0].slot_description}
+*/
+
+    // Create the HTML page
+    return(
+        <Fragment>
+            <p>
+                SKU: 
+            </p>
+            <p>
+                Price: 
+            </p>
+            <p>
+                Slot: 
+            </p>
+        </Fragment>
+    );
 
 
 

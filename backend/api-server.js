@@ -57,7 +57,7 @@ app.get('/bookings/id/:booking_id', async(req, res) => {
             'SELECT * FROM bookings WHERE booking_id=$1',
             [bookingId]
         );
-        res.json(allItems.rows);
+        res.json(allItems.rows[0]);  // Note adding the [0] takes the only row, and that way doesn't create an unnecessary extra json [ ] around the response
     } catch (error) {
         console.log(error);
         res.status(500).send(error.message)
