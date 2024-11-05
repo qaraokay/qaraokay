@@ -97,6 +97,8 @@ app.put('/bookings', async (req, res) => {
     
     const bookingId = req.body.booking_id;
     const sku = req.body.sku;
+    const price_currency = req.body.price_currency;
+    const price_amount = req.body.price_amount;
     try {
         const newItem = await itemsPool.query(
             'UPDATE bookings SET sku = $1, price_currency = $2, price_amount = $3 WHERE booking_id = $4',
