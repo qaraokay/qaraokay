@@ -2,7 +2,7 @@
 // v.1
 
 import React, { Fragment, useState, useEffect } from 'react';
-import './app.css';
+import './App.css';
 
 
 const App = () => {
@@ -41,22 +41,34 @@ const App = () => {
     console.log(apiData);
 
 
-   
-    
-
 
     // Create the HTML page
     return(
         <Fragment>
-            <p>
-                SKU: {apiData.sku}
-            </p>
-            <p>
-                Price:  {apiData.price_amount} {apiData.price_currency} 
-            </p>
-            <p>
-                Slot: {apiData.slot_description}
-            </p>
+
+            <header>
+                <h1>Payment</h1>
+            </header>
+
+
+            <section>
+                <div className="booking-container" >
+                    <h1>Details</h1>
+
+                    <p>
+                        SKU: {apiData.sku}
+                    </p>
+                    <p>
+                        Price:  {apiData.price_amount} {apiData.price_currency} 
+                    </p>
+                    <p>
+                        Slot: {apiData.slot_description}
+                    </p>
+
+                </div>
+            </section>
+            
+
         </Fragment>
     );
 
