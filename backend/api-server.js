@@ -26,8 +26,11 @@ const itemsPool = new Pool({
 });
 module.exports = itemsPool;
 
+
+
 // ------
 // Fetch all existing bookings (without any filtering)
+// GET
 app.get('/bookings', async(req, res) => {
     try {
         const allItems = await itemsPool.query(
@@ -45,6 +48,7 @@ app.get('/bookings', async(req, res) => {
 // Fetch specific booking
 // since values in body is not well supported for GET we use the
 // pathname method of Express.js like /bookings/id/123456
+// GET
 
 app.get('/bookings/id/:booking_id', async(req, res) => {
     const bookingId = req.params.booking_id;
@@ -63,7 +67,8 @@ app.get('/bookings/id/:booking_id', async(req, res) => {
 
 
 // ------
-// Create a completely new booking 
+// Create a completely new booking
+// POST 
 app.post('/bookings', async (req, res) => {
 
     const slotDescription = req.body.slot_description;
@@ -87,14 +92,15 @@ app.post('/bookings', async (req, res) => {
 // ------
 // Update an existing booking with new information
 // NOTE: HTML forms do not have PUT option, they only have GET and POST, so if you try to assign method=PUT in HTML form it just sends it as a GET
+// PUT
 app.put('/bookings', async (req, res) => {
     
     const bookingId = req.body.booking_id;
     const sku = req.body.sku;
     try {
         const newItem = await itemsPool.query(
-            'UPDATE bookings SET sku = $1 WHERE booking_id = $2',
-            [sku, bookingId]
+            'UPDATE bookings SET sku = $1, price_currency = $2, price_amount = $3 WHERE booking_id = $4',
+            [sku, price_currency, price_amount, bookingId]
         );
         res.json({ 
             message: "PUT Booking updated!",

@@ -11,11 +11,26 @@ const App = () => {
     const [formData, setFormData] = useState({
         booking_id: "",
         sku: "",
+        price_currency: "EUR",
+        price_amount: "",
       });
     
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevState) => ({ ...prevState, [name]: value }));
+        // Update the price when the SKU changes
+        // (Should not be hard-coded...)
+        switch(event.target.value) {
+            case "1_mon-wed_online":
+                setFormData((prevState) => ({ ...prevState, 'price_amount': '6' }));
+                break;
+            case "3_mon-wed_online":
+                setFormData((prevState) => ({ ...prevState, 'price_amount': '12' }));
+                break;
+            case "5_mon-wed_online":
+                setFormData((prevState) => ({ ...prevState, 'price_amount': '15' }));
+                break;
+        }
     };
 
     const handleSubmit = (event) => {
@@ -38,7 +53,7 @@ const App = () => {
 
         // Redirect to next screen/page (ie payment screen)
         // That payment screen will need the booking_id value
-        // INSERT HERE REDIRECT CODE
+        // INSERT HERE REDIRECT
 
         
       };
@@ -132,6 +147,8 @@ const App = () => {
                                 <input type="radio" id="3-songs" name="sku" value="3_mon-wed_online" onChange={handleChange}></input> <label>3 Songs Mon-Wed €12 (€18 in-store)</label>
                                 <input type="radio" id="5-songs" name="sku" value="5_mon-wed_online" onChange={handleChange}></input> <label>5 Songs Mon-Wed €15 (€21 in-store)</label>
                                 
+                                <input type="text" name="price_amount" value={formData.price_amount} onChange={handleChange}></input>
+
                                 <button type="submit">Book</button>
                             </form>
                         </p>
