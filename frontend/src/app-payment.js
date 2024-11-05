@@ -40,23 +40,22 @@ const App = () => {
     console.log("API data: ");
     console.log(apiData);
 
-    //const sku = apiData[0].sku;
-    /*
-    {apiData[0].price_amount} {apiData[0].price_currency} 
-    {apiData[0].slot_description}
-*/
+
+   
+    
+
 
     // Create the HTML page
     return(
         <Fragment>
             <p>
-                SKU: 
+                SKU: {apiData.sku}
             </p>
             <p>
-                Price: 
+                Price:  {apiData.price_amount} {apiData.price_currency} 
             </p>
             <p>
-                Slot: 
+                Slot: {apiData.slot_description}
             </p>
         </Fragment>
     );

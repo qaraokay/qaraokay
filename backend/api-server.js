@@ -99,10 +99,13 @@ app.put('/bookings', async (req, res) => {
     const sku = req.body.sku;
     const price_currency = req.body.price_currency;
     const price_amount = req.body.price_amount;
+    const progress_state = req.body.progress_state;
+    const artist_instagram = req.body.artist_instagram;
+    const artist_mobile = req.body.artist_mobile;
     try {
         const newItem = await itemsPool.query(
-            'UPDATE bookings SET sku = $1, price_currency = $2, price_amount = $3 WHERE booking_id = $4',
-            [sku, price_currency, price_amount, bookingId]
+            'UPDATE bookings SET sku = COALESCE($1, sku), price_currency = COALESCE($2, price_currency), price_amount = COALESCE($3, price_amount), progress_state = COALESCE($4, progress_state), artist_instagram = COALESCE($5, artist_instagram), artist_mobile = COALESCE($6, artist_mobile) WHERE booking_id = $7',
+            [sku, price_currency, price_amount, progress_state, artist_instagram, artist_mobile, bookingId]
         );
         res.json({ 
             message: "PUT Booking updated!",

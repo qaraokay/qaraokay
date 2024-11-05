@@ -13,13 +13,14 @@ const App = () => {
         sku: "",
         price_currency: "EUR",
         price_amount: "",
+        progress_state: "SELECTED_SLOT",        
       });
     
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevState) => ({ ...prevState, [name]: value }));
         // Update the price when the SKU changes
-        // (Should not be hard-coded...)
+        // REMOVE hard-coding...
         switch(event.target.value) {
             case "1_mon-wed_online":
                 setFormData((prevState) => ({ ...prevState, 'price_amount': '6' }));
@@ -63,8 +64,8 @@ const App = () => {
     useEffect(() => {
         const getAPI = () => {
             // Should use the env variable instead of hardcoding (eg Render's internal URL for the BACKEND_URL env variable we specified in Render)
-            const API = 'https://qaraokay-fullstack.onrender.com/bookings';
-            fetch(API)
+            const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings';
+            fetch(apiUrl)
                 .then((response) => {
                     console.log(response);
                     return response.json();
@@ -87,14 +88,13 @@ const App = () => {
     console.log(apiData);
     
 
+
+    // Create the HTML page
     return (
         <Fragment>
 
-
-
-
             <header>
-                <h1>Bookings</h1>
+                <h1>Select Slot and Package</h1>
             </header>
 
 
@@ -140,7 +140,7 @@ const App = () => {
                         </p>
 
                         <p>
-                            <form onSubmit={handleSubmit} onChange={handleChange}>  
+                            <form onSubmit={handleSubmit}>  
                                 <input type="text" name="booking_id" value={booking.booking_id} onChange={handleChange}></input>
 
                                 <input type="radio" id="1-songs" name="sku" value="1_mon-wed_online" onChange={handleChange}></input> <label>1 Song Mon-Wed €6 (€9 in-store)</label>
