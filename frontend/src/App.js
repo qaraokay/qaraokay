@@ -1,22 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
 
 import './App.css';
-
-
-
-import Navbar from "./components/Navbar.js";
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-} from "react-router-dom";
-//import Home from "./pages";
-import Slots from "./pages/slots.js";
-import Payment from "./pages/payment.js";
-import Artis from "./pages/artist.js";
-
-
 
 
 const App = () => {
@@ -47,9 +31,13 @@ const App = () => {
     const [loading, setLoading] = useState(true);
     console.log("API data: ");
     console.log(apiData);
+    
+    // Note below how we trick the HTML form which only has GET and POST, to also accept PUT
+    // We make the method=POST but then we create a hidden field with value=PUT and add JavaScript to catch that and post it as
     return (
         <Fragment>
-            <Navbar />
+                <script src="formInterceptScript.js"></script>
+
             <header>
                 <h1>Bookings</h1>
             </header>
@@ -83,13 +71,20 @@ const App = () => {
                                     </p>
 
                                     <p>
-                                        <form method="PUT" action="https://qaraokay-fullstack.onrender.com/bookings">
+                                        <form onsubmit="return false" name="updateForm" method="POST" action="https://qaraokay-fullstack.onrender.com/bookings">
+                                        <fieldset>
+                                          <input type="hidden" name="_method" value="PUT"></input>
                                           <input type="text" name="booking_id" value={booking.booking_id}></input>
-                                          <input type="radio" id="1-songs" name="sku" value="1_mon-wed_online"></input> <label for="1-songs">1 Song Mon-Wed €6 (€9 in-store)</label>
-                                          <input type="radio" id="3-songs" name="sku" value="3_mon-wed_online"></input> <label for="3-songs">3 Songs Mon-Wed €12 (€18 in-store)</label>
-                                          <input type="radio" id="5-songs" name="sku" value="5_mon-wed_online"></input> <label for="5-songs">5 Songs Mon-Wed €15 (€21 in-store)</label>
-                                          <button type="submit">Book</button>
+                                          
+                                          <input type="radio" id="1-songs" name="sku" value="1_mon-wed_online"></input> <label>1 Song Mon-Wed €6 (€9 in-store)</label>
+                                          <input type="radio" id="3-songs" name="sku" value="3_mon-wed_online"></input> <label>3 Songs Mon-Wed €12 (€18 in-store)</label>
+                                          <input type="radio" id="5-songs" name="sku" value="5_mon-wed_online"></input> <label>5 Songs Mon-Wed €15 (€21 in-store)</label>
+                                          
+                                          <button onclick="sendMessage()" type="submit">Book</button>
+
+                                          </fieldset>
                                         </form>
+                                        
                                     </p>
                               
 

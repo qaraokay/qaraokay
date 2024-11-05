@@ -53,7 +53,7 @@ app.post('/bookings', async (req, res) => {
             [slotDescription, sku]
         );
         res.json({ 
-            message: "New booking added!",
+            message: "POST New booking added!",
             item: newItem.rows
          });
     } catch (error) {
@@ -64,6 +64,7 @@ app.post('/bookings', async (req, res) => {
 
 // ------
 // Update an existing booking with new information
+// NOTE: HTML forms do not have PUT option, they only have GET and POST, so if you try to assign method=PUT in HTML form it just sends it as a GET
 app.put('/bookings', async (req, res) => {
     
     const bookingId = req.body.booking_id;
@@ -74,7 +75,7 @@ app.put('/bookings', async (req, res) => {
             [sku, bookingId]
         );
         res.json({ 
-            message: "Booking updated!",
+            message: "PUT Booking updated!",
             item: newItem.rows
          });
     } catch (error) {
