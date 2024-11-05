@@ -1,125 +1,5 @@
-/*
-// -----------------------------------
-// NEW v2 APP CODE
-// From https://www.telerik.com/blogs/react-basics-react-forms-examples
-
-
-// import React, { useState } from "react";
-import React, { useState, useEffect } from 'react';
-import './App.css';
-
-
-function App() {
-    
-    // ==================== 
-    // Not in original example
-    // ---- Fetch data from bookings database
-    
-     // useEffect starts
-     useEffect(() => {
-        const getAPI = () => {
-            // Should use the env variable instead of hardcoding (eg Render's internal URL for the BACKEND_URL env variable we specified in Render)
-            const API = 'https://qaraokay-fullstack.onrender.com/bookings';
-            fetch(API)
-                .then((response) => {
-                    console.log(response);
-                    return response.json();
-                })
-                .then((data) => {
-                    console.log(data);
-                    setLoading(false);
-                    setApiData(data);
-                });
-        };
-        getAPI();
-    }, []);
-    // useEffect ends
-
-
-    const [apiData, setApiData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    console.log("API data: ");
-    console.log(apiData);
-
-
-
-
-    // ====================
-
-
-    
-    const [formData, setFormData] = useState({
-      booking_id: "",
-      slot_description: "",
-      sku: "",
-    });
-  
-    const handleChange = (event) => {
-      const { name, value } = event.target;
-      setFormData((prevState) => ({ ...prevState, [name]: value }));
-    };
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      console.log(formData);
-      // Added here the API call
-
-    };
-  
-    return (
-      
-      <form onSubmit={handleSubmit}>
-        <label>
-          Booking ID:
-          <input
-            type="text"
-            name="booking_id"
-            value={formData.booking_id}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Slot Description:
-          <input
-            type="text"
-            name="slot_description"
-            value={formData.slot_description}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          SKU:
-          <input
-            type="text"
-            name="sku"
-            value={formData.sku}
-            onChange={handleChange}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-
-
-
-
-
-
-
-
-
-    );
-  }
-
-
-export default App;
-
-*/
-
-
-
-
-// -----------------------------------
-// OLD V1 APP CODE
+// App.js
+// v.1
 
 
 import React, { Fragment, useState, useEffect } from 'react';
@@ -130,7 +10,6 @@ const App = () => {
     
     const [formData, setFormData] = useState({
         booking_id: "",
-        slot_description: "",
         sku: "",
       });
     
@@ -142,16 +21,17 @@ const App = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Override certain fields of formData
-        /*
-        setFormData(prevState => ({
-            ...prevState, // Spread the previous car state
-            booking_id: 1234 
-        }));
-        */
-        //formData.booking_id = '1234';
         formData.booking_id = event.target.booking_id.value;
         console.log(formData);
-        // Add here the API call
+        // Create an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
+        fetch('https://qaraokay-fullstack.onrender.com/bookings/', {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+          })
       };
 
 
@@ -197,14 +77,14 @@ const App = () => {
 
             
             <div className="form-container">
-                <h2>Add Booking</h2>
+                <h2>Add Slot</h2>
                 <form method="POST" action="https://qaraokay-fullstack.onrender.com/bookings">  
                     <div>
                         <label>Slot Description</label>
                         <input type="text" name="slot_description" required /> 
                     </div>
                     <div>
-                        <button type="submit">Add Booking</button>
+                        <button type="submit">Add Slot</button>
                     </div>
                 </form>
             </div>
