@@ -1,9 +1,9 @@
-// App.js
+// app-booking.js
 // v.1
 
 
 import React, { Fragment, useState, useEffect } from 'react';
-import './App.css';
+import './app.css';
 
 
 const App = () => {
@@ -19,11 +19,14 @@ const App = () => {
     };
 
     const handleSubmit = (event) => {
+        // Prevent the HTML form to submit in the traditional way
         event.preventDefault();
         // Override certain fields of formData
         formData.booking_id = event.target.booking_id.value;
+        // Troubleshoot
         console.log(formData);
-        // Create an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
+
+        // Make an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
         fetch('https://qaraokay-fullstack.onrender.com/bookings/', {
             method: 'PUT',
             headers: {
@@ -31,7 +34,13 @@ const App = () => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(formData)
-          })
+          });
+
+        // Redirect to next screen/page (ie payment screen)
+        // That payment screen will need the booking_id value
+        // INSERT HERE REDIRECT CODE
+
+        
       };
 
 
@@ -148,6 +157,3 @@ const App = () => {
     );
 };
 export default App;
-
-
-// -----------------------------------

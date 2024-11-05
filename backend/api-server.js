@@ -27,7 +27,7 @@ const itemsPool = new Pool({
 module.exports = itemsPool;
 
 // ------
-// Fetch existing bookings (without any filtering)
+// Fetch all existing bookings (without any filtering)
 app.get('/bookings', async(req, res) => {
     try {
         const allItems = await itemsPool.query(
@@ -39,6 +39,28 @@ app.get('/bookings', async(req, res) => {
         res.status(500).send(error.message)
     }
 })
+
+
+// ------
+// Fetch specific booking
+// since values in body is not well supported for GET we use the
+// pathname method of Express.js like /bookings/id/123456
+
+app.get('/bookings/id/:booking_id', async(req, res) => {
+    const bookingId = req.params.booking_id;
+    try {
+        const allItems = await itemsPool.query(
+            'SELECT * FROM bookings WHERE booking_id=$1',
+            [bookingId]
+        );
+        res.json(allItems.rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message)
+    }
+})
+
+
 
 // ------
 // Create a completely new booking 
