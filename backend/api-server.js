@@ -25,6 +25,9 @@ module.exports = itemsPool;
 
 
 
+// =========================
+// API Endpioints
+
 // ------
 // Fetch all existing bookings (without any filtering)
 // GET
@@ -38,7 +41,7 @@ app.get('/bookings', async(req, res) => {
         console.log(error);
         res.status(500).send(error.message)
     }
-})
+});
 
 
 // ------
@@ -59,7 +62,7 @@ app.get('/bookings/id/:booking_id', async(req, res) => {
         console.log(error);
         res.status(500).send(error.message)
     }
-})
+});
 
 
 
@@ -84,7 +87,7 @@ app.post('/bookings', async (req, res) => {
         console.log(error);
         res.status(500).send(error.message)
     }
-})
+});
 
 // ------
 // Update an existing booking with new information
@@ -126,8 +129,6 @@ app.put('/bookings', async (req, res) => {
         artist_mobile = req.body.artist_mobile;
     }
     
-    
-    // Make the database request
     try {
         const newItem = await itemsPool.query(
             'UPDATE bookings SET sku = COALESCE($1, sku), price_currency = COALESCE($2, price_currency), price_amount = COALESCE($3, price_amount), progress_state = COALESCE($4, progress_state), artist_instagram = COALESCE($5, artist_instagram), artist_mobile = COALESCE($6, artist_mobile) WHERE booking_id = $7',
@@ -141,10 +142,48 @@ app.put('/bookings', async (req, res) => {
         console.log(error);
         res.status(500).send(error.message)
     }
-})
+});
 
 
-const port = 3000;
+
+// ------
+// Create a Stripe Session
+// STRIPE
+// POST
+
+const YOUR_DOMAIN = 'http://localhost:4242'; // was 4242 in Stripe example, 3000 was old app/server
+app.post('/create-checkout-session', async (req, res) => {
+const session = await stripe.checkout.sessions.create({
+line_items: [
+{
+// Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+       price: 'price_1QI237AnuyiQyip25DEfaJsM',
+quantity: 1,
+},
+],
+// Choose payment mode: payment = one-off, subscription = subscription, and setup = future payments
+mode: 'payment', 
+// Specify success and cancel pages (can be the same page and used with ? parameters)
+success_url: `${YOUR_DOMAIN}?success=true`,
+cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+});
+// After creating the session, redirect your customer to the URL for the Checkout page returned in the response.
+res.redirect(303, session.url);
+});
+
+
+
+
+
+// =========================
+
+
+
+
+
+
+// Run the API server
+const port = 4242; // Stripe example 4242, old app 3000
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
