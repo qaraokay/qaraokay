@@ -5,18 +5,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
-/*
+
 // CORS implemented so that we don't get errors when trying to access the server from a different server location
 const cors = require('cors');
 app.use(cors());
 
 const corsOptions = {
-    origin: 'localhost:3000',
+    origin: 'http://localhost:3000',
     optionsSuccessStatus: 200,
   };
  app.use(cors(corsOptions));
 
-*/
+
 
 
 const dotenv = require('dotenv');
@@ -25,8 +25,19 @@ dotenv.config();
 
 // Stripe config
 // This is your test secret API key.
+// Set your secret key. Remember to switch to your live secret key in production.
+// See your keys here: https://dashboard.stripe.com/apikeys
 const stripe = require('stripe')('sk_test_51QFrgWAnuyiQyip2dSKyOxF0At3LVFFxMudG0kFdLnjvVstcFVc63LNfb669UT6hFEVznLNdKEBhqaC04oOmMJUk00YZUNnEoS');
 app.use(express.static('public'));
+
+
+
+// Troubleshooting
+// Add this (or comment out) this API tracker for Stripe requests
+stripe.on('request', request => {
+    const currentStack = (new Error()).stack.replace(/^Error/, '')
+    console.log(`Making Stripe HTTP request to ${request.path}, callsite: ${currentStack}`)
+  })
 
 
 
@@ -172,29 +183,75 @@ app.put('/bookings', async (req, res) => {
 // STRIPE
 // POST
 
-const YOUR_DOMAIN = 'http://localhost:4242'; // was 4242 in Stripe example, 3000 was old app/server
+
+// REPLACE THIS (can use same or separate pages/routes/endpoints for success and error)
+const YOUR_DOMAIN = 'http://localhost:4242';
+
 app.post('/create-checkout-session', async (req, res) => {
-const session = await stripe.checkout.sessions.create({
-line_items: [
-{
-// Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-       price: 'price_1QI237AnuyiQyip25DEfaJsM',
-quantity: 1,
-},
-],
-// Choose payment mode: payment = one-off, subscription = subscription, and setup = future payments
-mode: 'payment', 
-// Specify success and cancel pages (can be the same page and used with ? parameters)
-success_url: `${YOUR_DOMAIN}?success=true`,
-cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    
+    // Troubleshooting
+    console.log('create session endpoint-------------------------');
+    console.log(req.query.session_id);
+    
+
+
+
+    const session = await stripe.checkout.sessions.create({
+        line_items: [
+        {
+            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+            price: 'price_1QI237AnuyiQyip25DEfaJsM',
+            quantity: 1
+        },
+        ],
+        // Choose payment mode: payment = one-off, subscription = subscription, and setup = future payments
+        mode: 'payment', 
+        // Specify success and cancel pages (can be the same page and used with ? parameters)
+        // the order/success can be any route as long as it matches the route in the confirmation page endpoint (below)
+        //success_url: `${YOUR_DOMAIN}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `https://www.google.com`,
+        cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    });
+    // Troubleshooting
+    console.log('session created-------------------------');
+    console.log(req.query.session_id);
+
+
+    // After creating the session, redirect your customer to the URL for the Checkout page returned in the response.
+    res.redirect(303, session.url);
 });
-// After creating the session, redirect your customer to the URL for the Checkout page returned in the response.
-res.redirect(303, session.url);
+
+
+
+
+
+
+
+// ------
+// Create a Stripe success page endpoint (which you can then use to redirect)
+// STRIPE
+// GET
+
+
+app.get('/order/success', async (req, res) => {
+    // Troubleshooting
+    console.log('order/success endpoint-------------------------');
+    console.log(req.query.session_id);
+    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+    const customer = await stripe.customers.retrieve(session.customer);
+
+  res.send(`<html><body><h1>Thanks for your order, ${customer.name}!</h1></body></html>`);
 });
 
 
 
 
+
+
+
+
+
+// NOT USED FOR ANYTHING NOV 6
 // ------
 // Stripe Webhook endpoint (to receive post-payment etc information from Stripe)
 // STRIPE
