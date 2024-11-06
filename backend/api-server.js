@@ -11,7 +11,10 @@ const cors = require('cors');
 app.use(cors());
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    //origin: 'http://localhost:3000',
+    // ----- CHANGE!!!!!
+    origin: "*",
+    // ------
     optionsSuccessStatus: 200,
   };
  app.use(cors(corsOptions));
@@ -59,6 +62,8 @@ module.exports = itemsPool;
 
 // =========================
 // API Endpioints
+
+
 
 // ------
 // Fetch all existing bookings (without any filtering)
@@ -185,7 +190,8 @@ app.put('/bookings', async (req, res) => {
 
 
 // REPLACE THIS (can use same or separate pages/routes/endpoints for success and error)
-const YOUR_DOMAIN = 'http://localhost:4242';
+//const YOUR_DOMAIN = 'http://localhost:4242';
+const YOUR_DOMAIN = 'https://qaraokay-fullstack.onrender.com';
 
 app.post('/create-checkout-session', async (req, res) => {
     
