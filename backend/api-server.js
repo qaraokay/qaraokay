@@ -22,7 +22,7 @@ const corsOptions = {
 
 
 
-// Enable DotEnv
+// Enable DotEnv for backend
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -37,11 +37,9 @@ const OAuth2 = google.auth.OAuth2;
 
 // -------------
 // Stripe config
-const STRIPE_TEST_MODE_ON = 1; // if 1 selects the test keys and products (otherwise real production keys)
 
-// Test key
-const stripe = require('stripe')( process.env.STRIPE_KEY);
-// Actual key in dashboard (prodcution/live)
+const stripe = require('stripe')(process.env.STRIPE_KEY);
+
 
 
 
@@ -163,6 +161,8 @@ app.post('/bookings', async (req, res) => {
     }
 });
 
+
+
 // ------
 // Update an existing booking with new information
 // NOTE: HTML forms do not have PUT option, they only have GET and POST, so if you try to assign method=PUT in HTML form it just sends it as a GET
@@ -237,15 +237,14 @@ app.put('/bookings', async (req, res) => {
 
 
 
+
+
+
+
 // ------
 // Create a Stripe Checkout Session
 // STRIPE
 // POST
-
-
-// REPLACE THIS (can use same or separate pages/routes/endpoints for success and error)
-//const YOUR_DOMAIN = 'http://localhost:4242';
-const YOUR_DOMAIN = 'https://qaraokay-fullstack.onrender.com';
 
 app.post('/create-checkout-session', async (req, res) => {
     
@@ -278,9 +277,8 @@ app.post('/create-checkout-session', async (req, res) => {
         client_reference_id: booking_id,
         // Specify success and cancel pages (can be the same page and used with ? parameters)
         // the order/success can be any route as long as it matches the route in the confirmation page endpoint (below)
-        success_url: `${YOUR_DOMAIN}/order/success?session_id={CHECKOUT_SESSION_ID}`,
-        //success_url: `https://www.google.com`,
-        cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+        success_url: `${process.env.MY_SERVER_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.MY_SERVER_URL}?canceled=true`,
     });
     // Troubleshooting
     console.log('session created-------------------------');
@@ -350,7 +348,7 @@ app.get('/order/success', async (req, res) => {
          */
          
         // ------
-        // Send email
+        // Send email (using Nodemailer, OAuth and Gmail)
         const oauth2Client = new OAuth2(
             process.env.CLIENT_ID,
             process.env.CLIENT_SECRET,

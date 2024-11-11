@@ -5,6 +5,10 @@ import React, { Fragment, useState, useEffect } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 
+
+
+
+
 const Slots = () => {
 
     // This is needed for redirecting to next page and pass variables to it
@@ -53,6 +57,14 @@ const Slots = () => {
         // Make an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
         const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/';
         //const apiUrl = 'http://localhost:4242/bookings/';
+        
+        /* with ENV
+        dotenv.config({ path: '../../..' });
+        const apiUrl = process.env.MY_SERVER_URL+'/bookings/';
+        */
+
+        console.log('----- Submit form API URL:');
+        console.log(apiUrl);
         fetch(apiUrl, {
             method: 'PUT',
             headers: {
@@ -76,6 +88,9 @@ const Slots = () => {
             // Should use the env variable instead of hardcoding (eg Render's internal URL for the BACKEND_URL env variable we specified in Render)
             const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/available';
             //const apiUrl = 'http://localhost:4242/bookings/available';
+
+            console.log('----- Fetch available slots API URL:');
+            console.log(apiUrl);
             fetch(apiUrl)
                 .then((response) => {
                     console.log(response);

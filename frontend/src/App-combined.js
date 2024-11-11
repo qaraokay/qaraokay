@@ -3,6 +3,8 @@ import NavBar from "./Components/NavBar.js";
 import { Routes, Route } from 'react-router-dom';
 
 
+
+
 import Home from './Components/Home.js';
 import About from './Components/About.js';
 import Slots from './Components/Slots.js';

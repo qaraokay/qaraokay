@@ -41,7 +41,13 @@ const Artist = () => {
 
         // Make an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
         const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/';
-        //const apiUrl = 'http://localhost:4242/bookings/';
+        //const apiUrl = 'http://localhost:4242/bookings/'; 
+        /* with ENV
+        dotenv.config({ path: '../../..' });
+        const apiUrl = process.env.MY_SERVER_URL+'/bookings/';
+        */
+
+
         fetch(apiUrl, {
             method: 'PUT',
             headers: {
