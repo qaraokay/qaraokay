@@ -74,8 +74,8 @@ const Slots = () => {
     useEffect(() => {
         const getAPI = () => {
             // Should use the env variable instead of hardcoding (eg Render's internal URL for the BACKEND_URL env variable we specified in Render)
-            //const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/available';
-            const apiUrl = 'http://localhost:4242/bookings/available';
+            const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/available';
+            //const apiUrl = 'http://localhost:4242/bookings/available';
             fetch(apiUrl)
                 .then((response) => {
                     console.log(response);

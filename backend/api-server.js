@@ -40,10 +40,8 @@ const OAuth2 = google.auth.OAuth2;
 const STRIPE_TEST_MODE_ON = 1; // if 1 selects the test keys and products (otherwise real production keys)
 
 // Test key
-const stripe = require('stripe')('sk_test_51QFrgWAnuyiQyip2dSKyOxF0At3LVFFxMudG0kFdLnjvVstcFVc63LNfb669UT6hFEVznLNdKEBhqaC04oOmMJUk00YZUNnEoS');
+const stripe = require('stripe')( process.env.STRIPE_KEY);
 // Actual key in dashboard (prodcution/live)
-// --- MOVE TO .ENV VARIABLE
-//const stripe = require('stripe')('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');
 
 
 
@@ -422,8 +420,3 @@ const port = 4242;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
-
-/*
-// Stripe example
-app.listen(4242, () => console.log('Running on port 4242'));
-*/

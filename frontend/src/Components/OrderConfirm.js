@@ -70,8 +70,8 @@ export default function OrderConfirm() {
 
     
     // Make an API call to get the Stripe price ID + other information for this booking
-    //const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/id/'+booking_id;
-    const apiUrl = 'http://localhost:4242/bookings/id/'+booking_id;
+    const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/id/'+booking_id;
+    //const apiUrl = 'http://localhost:4242/bookings/id/'+booking_id;
     
     console.log('----- Making API call to get price id + other booking details: ');
     console.log(apiUrl);
