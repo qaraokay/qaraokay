@@ -52,7 +52,7 @@ form {
     font-weight: bold;
 }
 
-form input[type=radio], input.radio {
+form input[type=radio] {
       float: left;
       clear: none;
       margin: 2px 0 0 2px;
@@ -78,7 +78,7 @@ form input {
 }
 
 form input:hover {
-    box-shadow:inset 0rem 0rem 0rem 0.3rem #000;
+    box-shadow:inset 0rem 0rem 0rem 0.3rem #000000;
 }
 
 form button {
@@ -112,12 +112,10 @@ form div {
     width: 50rem;
     max-width: 100%;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
 }
 
 .booking-container:hover {
-    box-shadow:inset 0rem 0rem 0rem 0.8rem #000;
+    box-shadow:inset 0rem 0rem 0rem 0.8rem #000000;
 }
 
 .artist_label {
@@ -128,7 +126,7 @@ form div {
 ol{
     list-style-type: none;
     background-color: #282828;
-    color: #fff;
+    color: #ffffff;
     overflow: hidden;
     margin: 0;
     border: 0;
