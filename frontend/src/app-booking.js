@@ -13,7 +13,8 @@ const App = () => {
         sku: "",
         price_currency: "EUR",
         price_amount: "",
-        progress_state: "SELECTED_SLOT",        
+        progress_state: "SELECTED_SLOT",
+        booking_updated_timestamp: "",        
       });
     
     const handleChange = (event) => {
@@ -23,13 +24,16 @@ const App = () => {
         // REMOVE hard-coding...
         switch(event.target.value) {
             case "1_mon-wed_online":
-                setFormData((prevState) => ({ ...prevState, 'price_amount': '6' }));
+                setFormData((prevState) => ({ ...prevState, 'price_amount': '3' }));
+                setFormData((prevState) => ({ ...prevState, 'stripe_price_id': 'price_1QIOrxAnuyiQyip2awjE62Sh' }));
                 break;
             case "3_mon-wed_online":
-                setFormData((prevState) => ({ ...prevState, 'price_amount': '12' }));
+                setFormData((prevState) => ({ ...prevState, 'price_amount': '6' }));
+                setFormData((prevState) => ({ ...prevState, 'stripe_price_id': 'price_1QIOsNAnuyiQyip2vI0TXhIX' }));
                 break;
             case "5_mon-wed_online":
-                setFormData((prevState) => ({ ...prevState, 'price_amount': '15' }));
+                setFormData((prevState) => ({ ...prevState, 'price_amount': '8' }));
+                setFormData((prevState) => ({ ...prevState, 'stripe_price_id': 'price_1QIOtGAnuyiQyip25kS0fqCj' }));
                 break;
         }
     };
@@ -39,11 +43,14 @@ const App = () => {
         event.preventDefault();
         // Override certain fields of formData
         formData.booking_id = event.target.booking_id.value;
+        formData.booking_updated_timestamp = Date.now();
         // Troubleshoot
         console.log(formData);
 
         // Make an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
-        fetch('https://qaraokay-fullstack.onrender.com/bookings/', {
+        //const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/';
+        const apiUrl = 'http://localhost:4242/bookings/';
+        fetch(apiUrl, {
             method: 'PUT',
             headers: {
               'Accept': 'application/json',
@@ -148,6 +155,7 @@ const App = () => {
                                 <input type="radio" id="5-songs" name="sku" value="5_mon-wed_online" onChange={handleChange}></input> <label>5 Songs Mon-Wed €15 (€21 in-store)</label>
                                 
                                 <input type="text" name="price_amount" value={formData.price_amount} onChange={handleChange}></input>
+                                <input type="text" name="stripe_price_id" value={formData.stripe_price_id} onChange={handleChange}></input>
 
                                 <button type="submit">Book</button>
                             </form>

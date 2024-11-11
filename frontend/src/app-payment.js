@@ -18,6 +18,8 @@ const ProductDisplay = () => (
         </div>
       </div>
       <form action="/create-checkout-session" method="POST">
+      <input type="text" name="booking_id" value="10001"></input>
+        <input type="text" name="stripe_price_id" value="price_1QIAuAAnuyiQyip22TlObYq1"></input>
         <button type="submit">
           Checkout
         </button>
@@ -58,7 +60,7 @@ const ProductDisplay = () => (
   }
 
 
-  
+
 
 /* ------------
 // old code without Stripe

@@ -73,6 +73,7 @@ const App = () => {
                     <p>
                         <form onSubmit={handleSubmit}>  
                                 
+                            <input type="text" name="booking_id" value={booking_id}></input>
                             <label for="instagram">Instagram:</label><br></br>
                             <input type="text" name="artist_instagram" id="instagram" value={formData.artist_instagram} onChange={handleChange}></input>
                             <label for="mobile">Mobile:</label><br></br>
