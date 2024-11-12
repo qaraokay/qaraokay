@@ -13,6 +13,10 @@ const MY_SERVER_URL='https://qaraokay-fullstack.onrender.com';
 
 
 
+// Full path to Stripe Checkout session
+const checkoutUrl = MY_SERVER_URL+'/create-checkout-session';
+console.log('--------- Checkout form submit URL:');
+console.log(checkoutUrl);
 
 // This shows the order summary confirmation
 // and the submit button + API endpioint
@@ -41,7 +45,7 @@ const ProductDisplay = ({ booking_id, stripe_price_id, currency, amount, descrip
       </section>
       
       <section>
-      <form action="/create-checkout-session" method="POST">
+      <form action={checkoutUrl} method="POST">
         <input type="hidden" name="booking_id" value={booking_id}></input>
         <input type="hidden" name="stripe_price_id" value={stripe_price_id}></input>
         <br></br>
