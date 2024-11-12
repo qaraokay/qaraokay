@@ -289,6 +289,9 @@ app.post('/create-checkout-session', async (req, res) => {
 
 
     // After creating the session, redirect your customer to the URL for the Checkout page returned in the response.
+    // Troubleshooting
+    console.log('---- session.url:');
+    console.log(session.url);
     res.redirect(303, session.url);
 });
 
