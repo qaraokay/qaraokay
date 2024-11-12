@@ -55,8 +55,8 @@ const Slots = () => {
         console.log(formData);
 
         // Make an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
-        const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/';
-        //const apiUrl = 'http://localhost:4242/bookings/';
+        //const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/';
+        const apiUrl = 'http://localhost:4242/bookings/';
         
         /* with ENV
         dotenv.config({ path: '../../..' });
@@ -86,8 +86,8 @@ const Slots = () => {
     useEffect(() => {
         const getAPI = () => {
             // Should use the env variable instead of hardcoding (eg Render's internal URL for the BACKEND_URL env variable we specified in Render)
-            const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/available';
-            //const apiUrl = 'http://localhost:4242/bookings/available';
+            //const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/available';
+            const apiUrl = 'http://localhost:4242/bookings/available';
 
             console.log('----- Fetch available slots API URL:');
             console.log(apiUrl);

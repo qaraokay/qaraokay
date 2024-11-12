@@ -277,8 +277,10 @@ app.post('/create-checkout-session', async (req, res) => {
         client_reference_id: booking_id,
         // Specify success and cancel pages (can be the same page and used with ? parameters)
         // the order/success can be any route as long as it matches the route in the confirmation page endpoint (below)
-        success_url: `${process.env.MY_SERVER_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.MY_SERVER_URL}?canceled=true`,
+        //success_url: `${process.env.MY_SERVER_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `https://qaraokay-fullstack.onrender.com/order/success?session_id={CHECKOUT_SESSION_ID}`,
+        //cancel_url: `${process.env.MY_SERVER_URL}?canceled=true`,
+        cancel_url: `https://qaraokay-fullstack.onrender.com?canceled=true`,
     });
     // Troubleshooting
     console.log('session created-------------------------');
