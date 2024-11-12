@@ -7,6 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+// -----
+// Localhost or Render? Which one to use
+//const MY_SERVER_URL='http://localhost:4242';
+const MY_SERVER_URL='https://qaraokay-fullstack.onrender.com';
+
+
+
 
 
 const Slots = () => {
@@ -55,14 +62,8 @@ const Slots = () => {
         console.log(formData);
 
         // Make an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
-        //const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/';
-        const apiUrl = 'http://localhost:4242/bookings/';
+        const apiUrl = MY_SERVER_URL+'/bookings/';
         
-        /* with ENV
-        dotenv.config({ path: '../../..' });
-        const apiUrl = process.env.MY_SERVER_URL+'/bookings/';
-        */
-
         console.log('----- Submit form API URL:');
         console.log(apiUrl);
         fetch(apiUrl, {
@@ -85,9 +86,9 @@ const Slots = () => {
     // Fetch all AVAILABLE bookings from API
     useEffect(() => {
         const getAPI = () => {
-            // Should use the env variable instead of hardcoding (eg Render's internal URL for the BACKEND_URL env variable we specified in Render)
-            //const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/available';
-            const apiUrl = 'http://localhost:4242/bookings/available';
+            
+            // Make an API call to fetch available slots
+            const apiUrl = MY_SERVER_URL+'/bookings/available';
 
             console.log('----- Fetch available slots API URL:');
             console.log(apiUrl);

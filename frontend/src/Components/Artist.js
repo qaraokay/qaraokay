@@ -1,12 +1,20 @@
- //Artist.js
- import React from 'react'
- import NavBar from './NavBar'
- import { useLocation } from "react-router-dom";
- import { Fragment, useState, useEffect } from 'react';
+//Artist.js
+import React from 'react'
+import NavBar from './NavBar'
+import { useLocation } from "react-router-dom";
+import { Fragment, useState, useEffect } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 
- 
+
+
+// -----
+// Localhost or Render? Which one to use =
+//const MY_SERVER_URL='http://localhost:4242';
+const MY_SERVER_URL='https://qaraokay-fullstack.onrender.com';
+
+
+
 
 const Artist = () => {
     // Catch the booking_id from the previous screen/page
@@ -40,13 +48,7 @@ const Artist = () => {
         console.log(formData);
 
         // Make an API call to update the values (ie a PUT call), and we do it here because HTML form can only do GET and POST
-        //const apiUrl = 'https://qaraokay-fullstack.onrender.com/bookings/';
-        const apiUrl = 'http://localhost:4242/bookings/'; 
-        /* with ENV
-        dotenv.config({ path: '../../..' });
-        const apiUrl = process.env.MY_SERVER_URL+'/bookings/';
-        */
-
+        const apiUrl = MY_SERVER_URL+'/bookings/';
 
         fetch(apiUrl, {
             method: 'PUT',

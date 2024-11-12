@@ -1,3 +1,4 @@
+// -----
 // Enable Express.js
 const express = require('express');
 const app = express();
@@ -7,6 +8,14 @@ app.use(express.static('public'));
 
 
 
+// -----
+// Localhost or Render? Which one to use
+//const MY_SERVER_URL='http://localhost:4242';
+const MY_SERVER_URL='https://qaraokay-fullstack.onrender.com';
+
+
+
+// -----
 // CORS implemented so that we don't get errors when trying to access the server from a different server location
 const cors = require('cors');
 app.use(cors());
@@ -21,13 +30,13 @@ const corsOptions = {
  app.use(cors(corsOptions));
 
 
-
+// -----
 // Enable DotEnv for backend
 const dotenv = require('dotenv');
 dotenv.config();
 
 
-
+// -----
 // Enable Nodemailer, Gmail and OAuth (for sending emails)
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
@@ -35,14 +44,9 @@ const OAuth2 = google.auth.OAuth2;
 
 
 
-// -------------
+// -----
 // Stripe config
-
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-
-
-
-
 /*
 // Troubleshooting
 // Add this (or comment out) this API tracker for Stripe requests
@@ -53,7 +57,7 @@ stripe.on('request', request => {
 */
 
 
-
+// -----
 // Define connection to database
 const { Pool } = require('pg');
 const itemsPool = new Pool({
@@ -63,9 +67,6 @@ const itemsPool = new Pool({
     }
 });
 module.exports = itemsPool;
-
-
-
 
 
 
@@ -277,10 +278,10 @@ app.post('/create-checkout-session', async (req, res) => {
         client_reference_id: booking_id,
         // Specify success and cancel pages (can be the same page and used with ? parameters)
         // the order/success can be any route as long as it matches the route in the confirmation page endpoint (below)
-        //success_url: `${process.env.MY_SERVER_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
-        success_url: `https://qaraokay-fullstack.onrender.com/order/success?session_id={CHECKOUT_SESSION_ID}`,
-        //cancel_url: `${process.env.MY_SERVER_URL}?canceled=true`,
-        cancel_url: `https://qaraokay-fullstack.onrender.com?canceled=true`,
+        success_url: `${MY_SERVER_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+        //success_url: `https://qaraokay-fullstack.onrender.com/order/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${MY_SERVER_URL}?canceled=true`,
+        //cancel_url: `https://qaraokay-fullstack.onrender.com?canceled=true`,
     });
     // Troubleshooting
     console.log('session created-------------------------');
